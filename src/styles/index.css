@@ -1,0 +1,293 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================================
+   BASE
+   ========================================================================== */
+@layer base {
+  :root {
+    /* Glass tint — the dark museum variant overrides this per-surface.
+       The default value is the one from the supplied glassmorphism recipe. */
+    --glass-tint: rgba(255, 255, 255, 0.23);
+    --glass-edge: rgba(255, 255, 255, 0.3);
+    --glass-sheen: rgba(255, 255, 255, 0.8);
+    --hairline: rgba(201, 197, 189, 0.12);
+  }
+
+  * {
+    border-color: theme('colors.bone.500' / 30%);
+  }
+
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply bg-ink-900 font-sans text-bone-200 antialiased;
+    font-feature-settings: 'ss01', 'cv05';
+    overflow-x: hidden;
+  }
+
+  /* The whole page is one dark marble hall — keep the scrollbar in character. */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #050505;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #26262a;
+    border-radius: 999px;
+    border: 3px solid #050505;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #3a3a40;
+  }
+
+  ::selection {
+    background: theme('colors.brass.500' / 35%);
+    color: theme('colors.bone.50');
+  }
+
+  :focus-visible {
+    outline: 2px solid theme('colors.brass.400');
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  img {
+    -webkit-user-drag: none;
+  }
+}
+
+/* ==========================================================================
+   GLASSMORPHISM
+   The recipe below is used verbatim as supplied. Tailwind utilities live in a
+   later cascade layer, so `w-full`, `h-auto`, `rounded-*` etc. applied on the
+   element still win over the fixed 240x360 default without editing this block.
+   ========================================================================== */
+@layer components {
+  .glass-card {
+    width: 240px;
+    height: 360px;
+    background: rgba(255, 255, 255, 0.23);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.5),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.1),
+      inset 0 0 0px 0px rgba(255, 255, 255, 0);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .glass-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+  }
+
+  .glass-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.8),
+      transparent,
+      rgba(255, 255, 255, 0.3)
+    );
+  }
+
+  /* --- dark-hall variant -------------------------------------------------
+     Same structure, same blur, same two light edges. Only the tint alphas are
+     dialled down so white glass reads as polished stone on a near-black page. */
+  .glass-card--dark {
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    box-shadow:
+      0 18px 48px rgba(0, 0, 0, 0.55),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.025),
+      inset 0 0 0px 0px rgba(255, 255, 255, 0);
+  }
+
+  .glass-card--dark::before {
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.38), transparent);
+  }
+
+  .glass-card--dark::after {
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.34),
+      transparent,
+      rgba(255, 255, 255, 0.1)
+    );
+  }
+
+  /* Even quieter: nested panels inside an already-glass card. */
+  .glass-card--inset {
+    background: rgba(255, 255, 255, 0.022);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow:
+      0 10px 26px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
+  }
+
+  .glass-card--inset::before {
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.22), transparent);
+  }
+
+  .glass-card--inset::after {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent, transparent);
+  }
+
+  /* Drops the fixed 240x360 footprint for cards that size to their content. */
+  .glass-card--fluid {
+    width: 100%;
+    height: auto;
+  }
+
+  /* --- shared building blocks ------------------------------------------- */
+  .hairline {
+    @apply border-bone-500/25;
+  }
+
+  .eyebrow {
+    @apply font-mono text-eyebrow uppercase tracking-widest2 text-bone-400;
+  }
+
+  .chip {
+    @apply inline-flex items-center rounded-md border border-bone-500/40 bg-white/[0.03]
+           px-2.5 py-1 font-mono text-2xs uppercase tracking-widest2 text-bone-300;
+  }
+
+  .rule {
+    @apply h-px w-full bg-gradient-to-r from-transparent via-bone-500/35 to-transparent;
+  }
+
+  .meter-track {
+    @apply h-1.5 w-full overflow-hidden rounded-full bg-white/[0.06];
+  }
+
+  .meter-fill {
+    @apply h-full rounded-full bg-gradient-to-r from-bone-300/70 to-bone-100;
+    transition: width 1.2s theme('transitionTimingFunction.museum');
+  }
+
+  /* Shared press behaviour for every button and pill link on the page: the
+     surface lifts under the cursor and sinks on the press, so a click has
+     weight. Colour still transitions with it — don't pair this with Tailwind's
+     `transition-colors`, which would override the property list. */
+  .btn-motion {
+    transition-property: color, background-color, border-color, box-shadow, transform, opacity;
+    transition-duration: 300ms;
+    transition-timing-function: theme('transitionTimingFunction.museum');
+  }
+
+  .btn-motion:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 26px -16px rgba(0, 0, 0, 0.95);
+  }
+
+  .btn-motion:active {
+    transform: translateY(0) scale(0.985);
+    transition-duration: 120ms;
+  }
+
+  .btn-motion:disabled {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+/* ==========================================================================
+   UTILITIES
+   ========================================================================== */
+@layer utilities {
+  .shell {
+    @apply mx-auto w-full max-w-shell px-5 sm:px-8 lg:px-10;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Light shaft falling through the dome, reused as a section wash. */
+  .light-shaft {
+    background: radial-gradient(
+      68% 52% at 50% 0%,
+      rgba(227, 194, 136, 0.14) 0%,
+      rgba(227, 194, 136, 0.04) 38%,
+      transparent 72%
+    );
+  }
+
+  .vignette {
+    background: radial-gradient(120% 90% at 50% 40%, transparent 40%, rgba(0, 0, 0, 0.82) 100%);
+  }
+
+  .grain {
+    background-image: url('/assets/Derived/textures/grain.png');
+    background-size: 160px;
+    background-repeat: repeat;
+  }
+
+  /* Scroll-reveal — a single orchestrated entrance per section. */
+  .reveal {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+    transition:
+      opacity 0.9s theme('transitionTimingFunction.museum'),
+      transform 0.9s theme('transitionTimingFunction.museum');
+    will-change: opacity, transform;
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* ==========================================================================
+   REDUCED MOTION
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
