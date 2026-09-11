@@ -11,7 +11,9 @@ export function Stat({ value, label, className = '' }) {
   return (
     <div className={cx('px-4 py-4 text-center sm:px-5', className)}>
       <p className="font-display text-2xl text-bone-50 sm:text-3xl">{value}</p>
-      <p className="mt-1.5 font-mono text-2xs uppercase tracking-widest2 text-bone-400">{label}</p>
+      <p className="mt-1.5 font-mono text-2xs uppercase tracking-widest text-bone-400 sm:tracking-widest2">
+        {label}
+      </p>
     </div>
   );
 }

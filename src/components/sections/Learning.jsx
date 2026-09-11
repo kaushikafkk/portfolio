@@ -36,7 +36,7 @@ export function Learning({ className = '' }) {
           ))}
         </h3>
 
-        <ul className="mt-7 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+        <ul className="mt-7 grid grid-cols-2 gap-3 xl:grid-cols-4">
           {LEARNING.tracks.map((track) => (
             <li key={track.name}>
               <GlassCard variant="inset" className="flex h-full flex-col p-4">

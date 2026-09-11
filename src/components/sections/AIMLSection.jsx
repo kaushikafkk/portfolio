@@ -34,12 +34,13 @@ export function AIMLSection({ className = '' }) {
           </span>
         </h3>
 
-        {/* pipeline */}
-        <ol className="mt-9 flex flex-wrap items-center justify-center gap-x-2 gap-y-3">
+        {/* pipeline — a vertical fall below lg so no arrow is ever orphaned by a
+            line wrap; a single horizontal run once there is room for all six */}
+        <ol className="mt-9 flex flex-col items-center gap-2 lg:flex-row lg:justify-center lg:gap-x-2">
           {pipeline.map((stage, i) => {
             const isCore = stage === 'LLM';
             return (
-              <li key={stage} className="flex items-center gap-2">
+              <li key={stage} className="flex flex-col items-center gap-2 lg:flex-row">
                 <span
                   className={
                     isCore
@@ -56,7 +57,7 @@ export function AIMLSection({ className = '' }) {
                     width="26"
                     height="8"
                     viewBox="0 0 26 8"
-                    className="shrink-0 text-bone-500"
+                    className="my-2 shrink-0 rotate-90 text-bone-500 lg:my-0 lg:rotate-0"
                   >
                     <path
                       d="M0 4h20"

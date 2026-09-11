@@ -15,7 +15,12 @@ const LABEL_GAP = 10;
 
 function Cluster({ cluster, align, labelRef }) {
   return (
-    <li className={cx('flex flex-col', align === 'right' ? 'lg:items-end lg:text-right' : '')}>
+    <li
+      className={cx(
+        'flex flex-col',
+        align === 'right' ? 'lg:col-start-3 lg:items-end lg:text-right' : 'lg:col-start-1',
+      )}
+    >
       <h4
         ref={labelRef}
         className={cx(
@@ -216,55 +221,54 @@ export function Stack({ className = '' }) {
           ))}
         </svg>
 
-        <div className="relative grid gap-8 lg:grid-cols-[1fr_auto_1fr] lg:items-center lg:gap-6">
-          <ul className="grid gap-7 sm:grid-cols-2 lg:grid-cols-1 lg:gap-14">
-            {left.map((cluster) => (
-              <Cluster
-                key={cluster.id}
-                cluster={cluster}
-                align="left"
-                labelRef={labelRef(cluster.id)}
+        {/* One grid at every size. Below lg the core leads and clusters run
+            2-up beneath it; at lg the grid flows column-wise into three rows,
+            so the core spans the middle column with three clusters each side. */}
+        <ul className="relative grid grid-cols-2 gap-x-5 gap-y-7 lg:grid-flow-col lg:grid-cols-[1fr_auto_1fr] lg:grid-rows-3 lg:items-center lg:gap-x-6 lg:gap-y-14">
+          <li className="col-span-2 flex justify-center lg:col-span-1 lg:col-start-2 lg:row-span-3 lg:row-start-1">
+            <div
+              ref={coreRef}
+              className="relative flex h-36 w-36 items-center justify-center sm:h-48 sm:w-48"
+            >
+              <span
+                aria-hidden="true"
+                className="absolute inset-0 rounded-full border border-bone-500/45"
               />
-            ))}
-          </ul>
-
-          {/* core */}
-          <div
-            ref={coreRef}
-            className="relative mx-auto flex h-40 w-40 items-center justify-center sm:h-48 sm:w-48"
-          >
-            <span
-              aria-hidden="true"
-              className="absolute inset-0 rounded-full border border-bone-500/45"
-            />
-            <span
-              aria-hidden="true"
-              className="absolute inset-3 rounded-full border border-bone-500/25"
-            />
-            <span
-              aria-hidden="true"
-              className="absolute inset-0 rounded-full bg-[radial-gradient(circle,rgba(227,194,136,0.12),transparent_68%)]"
-            />
-            <p className="relative text-center font-mono text-2xs uppercase leading-5 tracking-widest2 text-bone-100">
-              {STACK.core.map((word) => (
-                <span key={word} className="block">
-                  {word}
-                </span>
-              ))}
-            </p>
-          </div>
-
-          <ul className="grid gap-7 sm:grid-cols-2 lg:grid-cols-1 lg:gap-14">
-            {right.map((cluster) => (
-              <Cluster
-                key={cluster.id}
-                cluster={cluster}
-                align="right"
-                labelRef={labelRef(cluster.id)}
+              <span
+                aria-hidden="true"
+                className="absolute inset-3 rounded-full border border-bone-500/25"
               />
-            ))}
-          </ul>
-        </div>
+              <span
+                aria-hidden="true"
+                className="absolute inset-0 rounded-full bg-[radial-gradient(circle,rgba(227,194,136,0.12),transparent_68%)]"
+              />
+              <p className="relative text-center font-mono text-2xs uppercase leading-5 tracking-widest2 text-bone-100">
+                {STACK.core.map((word) => (
+                  <span key={word} className="block">
+                    {word}
+                  </span>
+                ))}
+              </p>
+            </div>
+          </li>
+
+          {left.map((cluster) => (
+            <Cluster
+              key={cluster.id}
+              cluster={cluster}
+              align="left"
+              labelRef={labelRef(cluster.id)}
+            />
+          ))}
+          {right.map((cluster) => (
+            <Cluster
+              key={cluster.id}
+              cluster={cluster}
+              align="right"
+              labelRef={labelRef(cluster.id)}
+            />
+          ))}
+        </ul>
       </GlassCard>
     </Section>
   );

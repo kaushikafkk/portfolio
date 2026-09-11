@@ -151,7 +151,7 @@ export function Navbar() {
               onClick={() => setMenuOpen((v) => !v)}
               aria-expanded={menuOpen}
               aria-controls="mobile-nav"
-              className="btn-motion flex h-9 w-9 flex-col items-center justify-center gap-[5px] rounded-md border border-bone-500/35 bg-ink-800/70 hover:border-brass-400/50"
+              className="btn-motion flex h-10 w-10 flex-col items-center justify-center gap-[5px] rounded-md border border-bone-500/35 bg-ink-800/70 hover:border-brass-400/50"
             >
               <span className="sr-only">{menuOpen ? 'Close menu' : 'Open menu'}</span>
               <span

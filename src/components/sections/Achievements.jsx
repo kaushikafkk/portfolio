@@ -8,7 +8,7 @@ export function Achievements({ className = '' }) {
     <Section className={className} id="achievements" number="09" title="Achievements" caption="Milestones that matter">
       <h3 className="font-display text-title uppercase text-bone-50">Achievements</h3>
 
-      <ul className="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+      <ul className="mt-6 grid grid-cols-2 gap-3 xl:grid-cols-4">
         {ACHIEVEMENTS.map((item) => (
           <li key={item.number}>
             <GlassCard variant="inset" className="h-full p-4">

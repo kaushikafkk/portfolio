@@ -84,15 +84,22 @@ export function Hero() {
         alt="A marble statue of a seated thinker, the emblem of this portfolio"
         fetchPriority="high"
         decoding="async"
-        className="pointer-events-none absolute bottom-[8%] left-1/2 -z-[5] h-[62%] w-auto max-w-none object-contain sm:h-[68%] lg:h-[74%]"
+        className="pointer-events-none absolute bottom-[8%] left-1/2 -z-[5] h-[54%] w-auto max-w-none object-contain sm:h-[64%] lg:h-[74%]"
         style={statueStyle}
+      />
+
+      {/* Below lg the copy stacks over the statue rather than beside it, so its
+          upper half is dimmed to keep the headline legible. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-[4] bg-gradient-to-b from-ink-900/80 via-ink-900/40 to-transparent lg:hidden"
       />
 
       <DustMotes />
 
       {/* --- content ----------------------------------------------------- */}
-      <div className="shell relative z-10 flex flex-1 flex-col justify-between pb-10 pt-28 sm:pt-32 lg:pb-14">
-        <div className="grid flex-1 grid-cols-1 items-center gap-10 lg:grid-cols-12">
+      <div className="shell relative z-10 flex flex-1 flex-col justify-between pb-10 pt-24 sm:pt-32 lg:pb-14">
+        <div className="grid flex-1 grid-cols-1 content-between gap-10 lg:grid-cols-12 lg:items-center">
           {/* left: identity */}
           <div className="lg:col-span-5">
             <p className="eyebrow flex items-center gap-3 text-bone-400">
