@@ -41,7 +41,7 @@ export function Hero() {
           src={HERO.hall}
           alt=""
           aria-hidden="true"
-          fetchPriority="high"
+          fetchpriority="high"
           decoding="async"
           className="h-full w-full object-cover object-center"
           style={{ transform: `scale(${1.04 + p * 0.06})`, transformOrigin: '50% 35%' }}
@@ -82,7 +82,7 @@ export function Hero() {
       <img
         src={HERO.statue}
         alt="A marble statue of a seated thinker, the emblem of this portfolio"
-        fetchPriority="high"
+        fetchpriority="high"
         decoding="async"
         className="pointer-events-none absolute bottom-[8%] left-1/2 -z-[5] h-[54%] w-auto max-w-none object-contain sm:h-[64%] lg:h-[74%]"
         style={statueStyle}
